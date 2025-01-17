@@ -34,4 +34,11 @@ def molecules_freq(str):
     ans.pop("")
     return ans
 
-print(molecules_freq("H2O"))
+print(molecules_freq("PO4"))
+
+eqns_per_atom = {}
+for term in lhs_terms:
+    freq = molecules_freq(term[1:])
+    for k,v in freq:
+        if k not in eqns_per_atom: eqns_per_atom[k] = []
+        eqns_per_atom[k].append(v)
