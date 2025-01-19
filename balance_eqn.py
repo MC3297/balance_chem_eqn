@@ -67,6 +67,7 @@ for i in range(len(rhs_terms)):
 # this is a homogenous linear system
 # note there's an implicit zero column
 M = list(eqns_per_element.values())
+print("raw matrix:")
 for i in M: print(i)
 print()
 
@@ -129,6 +130,17 @@ for i in ans:
         factor = lcm(factor, int(1/frac))
 
 # scale to int, round to 4 places, then take abs value
-for i in range(len(ans)): ans[i] = abs(round(ans[i]*factor, 4))
+for i in range(len(ans)): ans[i] = abs(int(round(ans[i]*factor, 4)))
 
+print("raw coefficients:")
 print(ans)
+print()
+
+print("result:")
+for i in range(len(lhs_terms)-1):
+    print(f"{ans[i]}({lhs_terms[i][1:]}) + ", end="")
+print(f"{ans[len(lhs_terms)-1]}({lhs_terms[-1][1:]}) -> ", end="")
+
+for i in range(len(rhs_terms)-1):
+    print(f"{ans[i+len(lhs_terms)]}({rhs_terms[i][1:]}) + ", end="")
+print(f"{ans[-1]}({rhs_terms[-1][1:]})")
