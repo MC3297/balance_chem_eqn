@@ -6,12 +6,11 @@ eqn = "_Na + _NaNO3 -> _Na2O + _N2"
 # do some string parsing
 eqn = eqn.replace(" ", "")
 eqn_lhs, eqn_rhs = eqn.split("->")
-##print(eqn)
-##print(eqn_lhs,eqn_rhs)
+print("chemical eqn:", eqn)
 
 lhs_terms = eqn_lhs.split("+")
 rhs_terms = eqn_rhs.split("+")
-##print(lhs_terms, rhs_terms)
+print("terms:", lhs_terms, rhs_terms)
 
 # convert string (can be empty string) to int
 def to_int(s):
@@ -62,7 +61,7 @@ for i in range(len(rhs_terms)):
         
         eqns_per_element[k][i+len(lhs_terms)] = -v
 
-##print(eqns_per_element)
+print("eqns per element:", eqns_per_element)
 
 # this is a homogenous linear system
 # note there's an implicit zero column
@@ -109,7 +108,9 @@ def row_reduce(matrix):
     return m
 
 M_rref = row_reduce(M)
-##for i in M_rref: print(i)
+print("row reduced matrix:")
+for i in M_rref: print(i)
+print()
 
 ans = [0]*(len(lhs_terms)+len(rhs_terms))
 
@@ -117,6 +118,9 @@ ans = [0]*(len(lhs_terms)+len(rhs_terms))
 ans[-1] = -1
 for i in range(len(ans)-1):
     ans[i] = M_rref[i][-1]
+    
+print("raw coefficients:")
+print(ans)
 
 from math import gcd
 def lcm(a,b):
@@ -132,7 +136,7 @@ for i in ans:
 # scale to int, round to 4 places, then take abs value
 for i in range(len(ans)): ans[i] = abs(int(round(ans[i]*factor, 4)))
 
-print("raw coefficients:")
+print("scaled coefficients:")
 print(ans)
 print()
 
